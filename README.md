@@ -1,4 +1,4 @@
-# Protheus Docker Base 26.x.y.z
+# Protheus Docker Base 26.x.y.z (Arara Azul)
 
 Imagem Docker base para execução do **TOTVS Protheus 12** (AppServer) em ambiente containerizado.
 
@@ -10,13 +10,13 @@ Esse projeto gera imagem base para a construção de imagens de AppServer para L
 
 ### Características
 
-- **Base:** `feliperaposo/protheus-docker-baselight:26` (Oracle Linux 9 Slim + AppServer 26.3.0.0)
+- **Base:** `feliperaposo/protheus-docker-baselight:26` (Oracle Linux 9 Slim + AppServer 26.x.y.z)
 - **Protheus:** AppServer (porta TCP 1234)
-- **SmartClient WebApp:** `webapp.so` em `/protheus12/bin/appserver/`
+- **DBAPI:** `dbapi.so` em `/protheus12/bin/appserver/`
 - **Printer:** `printer` em `/protheus12/bin/appserver/`
+- **SmartClient WebApp:** `webapp.so` em `/protheus12/bin/appserver/`
 - **Web Agent:** 1.1.2 (instaladores deb/rpm/dmg/exe em `/protheus12/bin/webagent/`)
-- **REST API:** Habilitada na porta 8080 (`/api`)
-- **HTTP Server:** Porta 9995 para conteúdo estático (`/rest`)
+- **REST API:** Habilitada na porta 8080 (`/rest`)
 - **Configuração dinâmica:** Banco de dados definido via variável de ambiente `APPSERVER_DATABASE`
 
 ## Pré-requisitos
@@ -51,7 +51,7 @@ Gera as tags:
 
 - **Entrypoint:** `/protheus.sh`
 - **APO:** `/protheus12/apo/`
-- **AppServer:** Binários do baselight em `/protheus12/bin/appserver/`; overlay desta imagem: `appserver.ini`, `printer`, `webapp.so`
+- **AppServer:** Binários do baselight em `/protheus12/bin/appserver/`; overlay desta imagem: `appserver.ini`, `dbapi.so`, `printer`, `webapp.so`
 - **Web Agent:** `/protheus12/bin/webagent/`
 - **Configuração:** `appserver.ini` (parâmetro `{{APPSERVER_DATABASE}}` substituído em runtime)
 - **Protheus Data:** `/protheus12/protheus_data/`

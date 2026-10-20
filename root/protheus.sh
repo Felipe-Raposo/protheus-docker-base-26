@@ -21,7 +21,6 @@ fi
 
 # Configura e inicia serviço do Protheus.
 cd /protheus12/bin/appserver/
-mkdir -p ./app-root
 sed 's/{{APPSERVER_DATABASE}}/'"${APPSERVER_DATABASE}"'/' -i ./appserver.ini
 echo "Inicializando Protheus AppServer $(./appsrvlinux --version) ${APPSERVER_DATABASE}"
 # exec: appsrvlinux assume o PID 1 e recebe SIGTERM do "docker stop" (shutdown gracioso).
