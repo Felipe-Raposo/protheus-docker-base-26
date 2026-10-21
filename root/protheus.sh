@@ -19,6 +19,9 @@ if [[ -f "/protheus12/bin/appserver.tar.xz" ]]; then
 	rm appserver.tar.xz
 fi
 
+# O MPP publica /app-root nesta pasta. Sem ela a location é recusada.
+mkdir -p /protheus12/protheus_data/http-root/app-root
+
 # Configura e inicia serviço do Protheus.
 cd /protheus12/bin/appserver/
 sed 's/{{APPSERVER_DATABASE}}/'"${APPSERVER_DATABASE}"'/' -i ./appserver.ini

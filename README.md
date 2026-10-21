@@ -17,6 +17,7 @@ Esse projeto gera imagem base para a construção de imagens de AppServer para L
 - **SmartClient WebApp:** `webapp.so` em `/protheus12/bin/appserver/`
 - **Web Agent:** 1.1.2 (instaladores deb/rpm/dmg/exe em `/protheus12/bin/webagent/`)
 - **REST API:** Habilitada na porta 8080 (`/rest`)
+- **APP Monitor:** Habilitada na porta 32033 (`/app-monitor`)
 - **Configuração dinâmica:** Banco de dados definido via variável de ambiente `APPSERVER_DATABASE`
 
 ## Pré-requisitos
