@@ -12,7 +12,7 @@ Esse projeto gera imagem base para a construção de imagens de AppServer para L
 
 - **Base:** `feliperaposo/protheus-docker-baselight:26` (Oracle Linux 9 Slim + AppServer 26.x.y.z)
 - **Protheus:** AppServer (porta TCP 1234)
-- **DBAPI:** `dbapi.so` em `/protheus12/bin/appserver/`
+- **DBAPI:** `dbapi.so` baixado de `http://dbaccess:7891/dbapi.so` para `/protheus12/bin/appserver/` na inicialização, quando o `appserver.ini` tem `[DBAccess]` (`DBAPI_URL` substitui a URL)
 - **Printer:** `printer` em `/protheus12/bin/appserver/`
 - **SmartClient WebApp:** `webapp.so` em `/protheus12/bin/appserver/`
 - **Web Agent:** 1.1.2 (instaladores deb/rpm/dmg/exe em `/protheus12/bin/webagent/`)
@@ -52,7 +52,7 @@ Gera as tags:
 
 - **Entrypoint:** `/protheus.sh`
 - **APO:** `/protheus12/apo/`
-- **AppServer:** Binários do baselight em `/protheus12/bin/appserver/`; overlay desta imagem: `appserver.ini`, `dbapi.so`, `printer`, `webapp.so`
+- **AppServer:** Binários do baselight em `/protheus12/bin/appserver/`; overlay desta imagem: `appserver.ini`, `printer`, `webapp.so`. O `dbapi.so` vem do dbAccess na inicialização.
 - **Web Agent:** `/protheus12/bin/webagent/`
 - **Configuração:** `appserver.ini` (parâmetro `{{APPSERVER_DATABASE}}` substituído em runtime)
 - **Protheus Data:** `/protheus12/protheus_data/`
