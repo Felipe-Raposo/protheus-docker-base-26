@@ -4,25 +4,28 @@ Imagem Docker base para execução do **TOTVS Protheus 12** (AppServer) em ambie
 
 ## Descrição
 
-Este projeto monta uma imagem base Docker para rodar o AppServer do Protheus 12 sobre Oracle Linux 9. A imagem estende [protheus-docker-baselight:26](https://hub.docker.com/r/feliperaposo/protheus-docker-baselight) com configuração padrão, SmartClient WebApp e Web Agent.
+Este projeto monta a imagem `feliperaposo/protheus-docker-base:26`, usada pelo Protheus 12.1.2610. Ela estende [protheus-docker-baselight:26](https://github.com/Felipe-Raposo/protheus-docker-baselight-26) com `appserver.ini`, SmartClient WebApp, Web Agent e o proxy da porta pública.
 
-Esse projeto gera imagem base para a construção de imagens de AppServer para License e para Protheus 12.1.2410 ou 12.1.2510.
+Se estiver buscando um ambiente completo com Protheus + License + dbAccess + Postgres, acesse esse [projeto](https://github.com/Felipe-Raposo/protheus-docker-compose).
 
 ### Características
 
-- **Base:** `feliperaposo/protheus-docker-baselight:26` (Oracle Linux 9 Slim + AppServer 26.x.y.z)
-- **Protheus:** AppServer (porta TCP 1234)
+- **Base:** `feliperaposo/protheus-docker-baselight:26` (Oracle Linux 9 Slim + AppServer 26.3.0.0)
+- **AppServer:** porta TCP 1235
+- **Proxy:** `app-root-proxy` em `/usr/local/bin/`, na porta 1234. Encaminha `/app-root` ao HTTP Server e o restante ao AppServer
+- **HTTP Server:** porta 9995 (`/app-root`, raiz em `/protheus12/protheus_data/http-root/app-root`)
 - **DBAPI:** `dbapi.so` baixado de `http://dbaccess:7891/dbapi.so` para `/protheus12/bin/appserver/` na inicialização, quando o `appserver.ini` tem `[DBAccess]` (`DBAPI_URL` substitui a URL)
 - **Printer:** `printer` em `/protheus12/bin/appserver/`
 - **SmartClient WebApp:** `webapp.so` em `/protheus12/bin/appserver/`
 - **Web Agent:** 1.1.2 (instaladores deb/rpm/dmg/exe em `/protheus12/bin/webagent/`)
-- **REST API:** Habilitada na porta 8080 (`/rest`)
-- **APP Monitor:** Habilitada na porta 32033 (`/app-monitor`)
-- **Configuração dinâmica:** Banco de dados definido via variável de ambiente `APPSERVER_DATABASE`
+- **REST:** porta 8080 (`/rest`)
+- **App Monitor:** porta 32033 (`/app-monitor`)
+- **Configuração dinâmica:** banco de dados definido via `APPSERVER_DATABASE`
 
 ## Pré-requisitos
 
 - Docker (com BuildKit habilitado para build)
+- Host de build `linux/amd64` (`make build` passa `--platform=linux/amd64`)
 - Imagem `feliperaposo/protheus-docker-baselight:26` disponível localmente ou no registry
 
 ## Build
@@ -52,7 +55,8 @@ Gera as tags:
 
 - **Entrypoint:** `/protheus.sh`
 - **APO:** `/protheus12/apo/`
-- **AppServer:** Binários do baselight em `/protheus12/bin/appserver/`; overlay desta imagem: `appserver.ini`, `printer`, `webapp.so`. O `dbapi.so` vem do dbAccess na inicialização.
+- **AppServer:** binários do baselight em `/protheus12/bin/appserver/`; overlay desta imagem: `appserver.ini`, `printer`, `webapp.so`. O `dbapi.so` vem do dbAccess na inicialização
+- **Proxy:** `/usr/local/bin/app-root-proxy`, iniciado pelo entrypoint nas portas 1234, 1235 e 9995
 - **Web Agent:** `/protheus12/bin/webagent/`
 - **Configuração:** `appserver.ini` (parâmetro `{{APPSERVER_DATABASE}}` substituído em runtime)
 - **Protheus Data:** `/protheus12/protheus_data/`
